@@ -9,17 +9,30 @@ body {
 }
 
 .flipbook {
-  display: flex;
-  flex-direction: row;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .pagina {
-  flex: 0 0 100%;
+  width: 100vw;
   height: 100vh;
-  object-fit: contain;
-  scroll-snap-align: start;
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
+
+.pagina img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.pagina.active {
+  display: flex;
+}
+
