@@ -1,24 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".flipbook");
   const pages = document.querySelectorAll(".pagina");
-  const totalPages = pages.length;
   let currentPage = 0;
+
+  function showPage(index) {
+    pages.forEach((p, i) => {
+      if (i === index) {
+        p.classList.add("active");
+      } else {
+        p.classList.remove("active");
+      }
+    });
+  }
+
+  // Mostrar la primera página al iniciar
+  showPage(currentPage);
+
   let startX = 0;
 
-  container.addEventListener("touchstart", (e) => {
+  document.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
   });
 
-  container.addEventListener("touchend", (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const delta = startX - endX;
-
-    if (delta > 50 && currentPage < totalPages - 1) {
+  document.addEventListener("touchend", (e) => {
+    const deltaX = e.changedTouches[0].clientX - startX;
+    if (deltaX < -50 && currentPage < pages.length - 1) {
       currentPage++;
-    } else if (delta < -50 && currentPage > 0) {
+      showPage(currentPage);
+    } else if (deltaX > 50 && currentPage > 0) {
       currentPage--;
+      showPage(currentPage);
     }
-
-    pages[currentPage].scrollIntoView({ behavior: "smooth" });
   });
 });
